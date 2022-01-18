@@ -7,13 +7,13 @@ namespace TestTaskForD_Studio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RequestController : ControllerBase
+    public class RequestController : Controller
     {
-        IRepository<Invoice> db;
+        IRepository db;
 
         public RequestController()
         {
-            db = new Handler();
+            db = new CSVRepository();
         }
 
         [HttpGet("/api/invoices")]
@@ -47,6 +47,12 @@ namespace TestTaskForD_Studio.Controllers
         public void Delete(long invoiceId)
         {
             db.Delete(invoiceId);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
